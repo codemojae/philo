@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 01:13:20 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 01:13:58 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 02:50:31 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_msg(int state, t_philo *philo)
 	pthread_mutex_lock(&philo->data->print);
 	time = get_time() - philo->data->t_start;
 	if (state == EATING)
-		printf("%lld   %d is eating\n", time, philo->pid);
+		printf("%lld   %d is eating %d\n", time, philo->pid, philo->eat_count);
 	else if (state == SLEEPING)
 		printf("%lld   %d is sleeping\n", time, philo->pid);
 	else if (state == THINKING)

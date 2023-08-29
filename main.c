@@ -41,6 +41,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (data.philo_num == 1)
 		return (one_philo(&data));
+	printf("%d %d\n", data.someone_dead, data.finished);
 	create_thread(&data);
 	exit_philo(&data);
 	return (0);

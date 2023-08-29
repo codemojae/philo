@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:57:51 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 02:44:15 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 03:42:19 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*philo(void *phil)
 	t_philo	*philo;
 
 	philo = (t_philo *)phil;
-	while (!philo->data->someone_dead && !philo->data->finished)
+	while (philo->data->someone_dead == 0 && philo->data->finished == 0)
 	{
 		eating(philo);
 		sleeping(philo);
@@ -34,7 +34,7 @@ void	*monitoring(void *dat)
 	int			i;
 
 	data = (t_data *) dat;
-	while (!data->someone_dead && !data->finished)
+	while (data->someone_dead == 0 && data->finished == 0)
 	{
 		i = 0;
 		while (i < data->philo_num)
@@ -63,7 +63,7 @@ void	*waitering(void *dat)
 	t_data	*data;
 
 	data = (t_data *) dat;
-	while (!data->someone_dead && !data->finished)
+	while (data->someone_dead == 0 && data->finished == 0)
 	{
 		if (data->im_full == data->eat_goal)
 		{
@@ -82,7 +82,7 @@ int	join_thread(t_data *data)
 	i = 0;
 	while (i < data->philo_num)
 	{
-		if (pthread_join(data->thread[i], NULL))
+		if (pthread_detach(data->thread[i]))
 			return (error_philo("fail join thread"));
 		i++;
 	}
@@ -96,22 +96,22 @@ int	create_thread(t_data *data)
 	int			i;
 
 	i = 0;
-	if (pthread_create(&monitor, NULL, &monitoring, &data))
+	if (pthread_create(&monitor, NULL, &monitoring, data))
 		return (error_philo("fail create thread"));
 	while (i < data->philo_num)
 	{
 		if (pthread_create(&data->thread[i], NULL, &philo, &data->philos[i]))
 			return (error_philo("fail create thread"));
 		i++;
-		//sleep 필요?
+		usleep_ph(1);
 	}
 	if (data->eat_goal != -1)
 	{
-		if (pthread_create(&waiter, NULL, &waitering, &data))
+		if (pthread_create(&waiter, NULL, &waitering, data))
 			return (error_philo("fail create thread"));
 		pthread_join(waiter, NULL);
 	}
-	join_thread(data);
 	pthread_join(monitor, NULL);
+	join_thread(data);
 	return (0);
 }

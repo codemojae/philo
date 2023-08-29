@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:56:32 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 02:47:22 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 03:40:37 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,8 @@ int	init_fork(t_data *data)
 	i = 0;
 	while (i < data->philo_num)
 	{
-		data->philos[i].r_fork = &data->forks[i];
-		data->philos[i].l_fork = &data->forks[
-			(i + data->philo_num - 2) % data->philo_num + 1];
+		data->philos[i].l_fork = &data->forks[i];
+		data->philos[i].r_fork = &data->forks[(i + 1) % data->philo_num];
 		i++;
 	}
 	return (0);
