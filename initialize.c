@@ -6,40 +6,11 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:56:32 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 12:18:41 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 18:39:33 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	ft_atoi_ph(const char *str)
-{
-	long long	result;
-	int			pm;
-	int			return_value;
-
-	result = 0;
-	pm = 1;
-	while ((*str >= 9 && *str <= 13) || *str == ' ')
-		str++;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			pm = pm * -1;
-		str++;
-	}
-	while (*str >= '0' && *str <= '9')
-	{
-		result = result * 10 + (*str - '0');
-		if (result < -2147483648 || result > 2147483647)
-			printf("over int\n");
-		str++;
-	}
-	if (result != 0)
-		result *= pm;
-	return_value = result;
-	return (return_value);
-}
 
 // 데이터 초기화
 	// 범위설정이 필요한가?
@@ -77,12 +48,13 @@ int	init_philo(t_data *data)
 	while (i < data->philo_num)
 	{
 		data->philos[i].pid = i + 1;
-		data->philos[i].last_meal = get_time();
+		data->philos[i].ttd = get_time() + data->t_die;
 		data->philos[i].data = data;
 		data->philos[i].eat_count = 0;
 		data->philos[i].check = 0;
 		data->philos[i].have_l = 0;
 		data->philos[i].have_r = 0;
+		pthread_mutex_init(&data->philos[i].edit, NULL);
 		i++;
 	}
 	return (0);

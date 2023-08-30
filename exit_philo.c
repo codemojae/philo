@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 02:12:57 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 12:37:51 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 18:39:33 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_thread(t_data *data)
 	while (i < data->philo_num)
 	{
 		pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&data->philos[i].edit);
 		i++;
 	}
 	pthread_mutex_destroy(&data->edit);
@@ -38,8 +39,9 @@ void	free_data(t_data *data)
 		free(data->can);
 }
 
-void	exit_philo(t_data *data)
+int	exit_philo(t_data *data)
 {
 	free_thread(data);
 	free_data(data);
+	return (1);
 }

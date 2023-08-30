@@ -24,6 +24,12 @@
 # define THINKING 2
 # define DEAD 3
 # define PICKING 4
+# define FULL 5
+
+# define RED "\033[1;31m"
+# define GREEN "\033[0;32m"
+# define YELLOW "\033[0;33m"
+# define RESET "\033[0m"
 
 struct	s_data;
 
@@ -33,17 +39,14 @@ typedef struct s_philo
 	int				pid;
 	int				eat_count;
 	int				check;
-	uint64_t		last_meal;
+	uint64_t		ttd;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
 	int				*can_r;
 	int				*can_l;
 	int				have_r;
 	int				have_l;
-	//pthread_t		t;
-	//int				status;
-	//int				eating;
-	//pthread_mutex_t	lock;
+	pthread_mutex_t	edit;
 }	t_philo;
 
 typedef struct s_data
@@ -65,21 +68,20 @@ typedef struct s_data
 	int				*can;
 	pthread_mutex_t	edit;
 	pthread_mutex_t	print;
-
-
 }	t_data;
 
 // check_input.c
 int			is_digit(char c);
 int			is_sign(char c);
 int			is_valid_form(char *value);
+int			ft_atoi_check(const char *str);
 int			check_input(char **argv);
 
 // initialize.c
-int			ft_atoi_ph(const char *str);
 int			init_data(t_data *data, int argc, char **argv);
 int			init_philo(t_data *data);
 int			init_fork(t_data *data);
+int			init_can(t_data *data);
 int			initialize(t_data *data, int argc, char **argv);
 
 // create_thread.c
@@ -90,9 +92,9 @@ int			join_thread(t_data *data);
 int			create_thread(t_data *data);
 
 // action.c
+void		pickup_forks2(t_philo *philo);
 void		pickup_forks(t_philo *philo);
 void		drop_forks(t_philo *philo);
-void		sleeping(t_philo *philo);
 void		thinking(t_philo *philo);
 void		eating(t_philo *philo);
 
@@ -100,14 +102,14 @@ void		eating(t_philo *philo);
 uint64_t	get_time(void);
 void		print_msg(int state, t_philo *philo);
 int			usleep_ph(useconds_t time);
+int			ft_atoi_ph(const char *str);
 
 // exit_philo.c
 void		free_thread(t_data *data);
 void		free_data(t_data *data);
-void		exit_philo(t_data *data);
+int			exit_philo(t_data *data);
 
 // main.c
 int			error_philo(char *str);
-int			one_philo(t_data *data);
 
 #endif

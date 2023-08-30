@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:55:08 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/29 23:55:42 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 18:01:48 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,34 @@ int	is_valid_form(char *value)
 	return (1);
 }
 
+int	ft_atoi_check(const char *str)
+{
+	long long	result;
+	int			pm;
+
+	result = 0;
+	pm = 1;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			pm = pm * -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		result = result * 10 + (*str - '0');
+		if (result < -2147483648 || result > 2147483647)
+			return (-1);
+		str++;
+	}
+	if (result * pm < 0)
+		return (-1);
+	return (0);
+}
+
+
 // 입력값 확인, 숫자인지, 양수인지 등.
 int	check_input(char **argv)
 {
@@ -49,7 +77,9 @@ int	check_input(char **argv)
 	while (argv[i])
 	{
 		if (!is_valid_form(argv[i]))
-			return (-1);
+			return (error_philo("invalid form"));
+		if (ft_atoi_check(argv[i]) == -1)
+			return (error_philo("Only Positive number in INT range"));
 		i++;
 	}
 	return (0);
