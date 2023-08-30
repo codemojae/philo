@@ -36,8 +36,10 @@ typedef struct s_philo
 	uint64_t		last_meal;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
-	int				can_r;
-	int				can_l;
+	int				*can_r;
+	int				*can_l;
+	int				have_r;
+	int				have_l;
 	//pthread_t		t;
 	//int				status;
 	//int				eating;
@@ -60,6 +62,7 @@ typedef struct s_data
 	uint64_t		t_start;
 
 	pthread_mutex_t	*forks;
+	int				*can;
 	pthread_mutex_t	edit;
 	pthread_mutex_t	print;
 

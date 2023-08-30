@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 02:12:57 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 02:30:31 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 12:37:51 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	free_data(t_data *data)
 		free(data->philos);
 	if (data->thread)
 		free(data->thread);
+	if (data->can)
+		free(data->can);
 }
 
 void	exit_philo(t_data *data)

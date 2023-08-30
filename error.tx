@@ -1,0 +1,138 @@
+./philo 5 610 200 200
+
+153809   5 is thinking
+153809   4 is sleeping
+153809   3 has taken a fork
+153809   3 has taken a fork
+153809   3 is eating 307
+153816   2 is thinking
+153816   1 is sleeping
+153816   5 has taken a fork
+153816   5 has taken a fork
+153816   5 is eating 307
+154009   4 is thinking
+154009   3 is sleeping
+154009   2 has taken a fork
+154009   2 has taken a fork
+154009   2 is eating 308
+154016   5 is sleeping
+154016   4 has taken a fork
+154016   4 has taken a fork
+154016   4 is eating 308
+154016   1 is thinking
+154209   3 is thinking
+154209   2 is sleeping
+154209   1 has taken a fork
+154209   1 has taken a fork
+154209   1 is eating 308
+154216   4 is sleeping
+154216   3 has taken a fork
+154216   3 has taken a fork
+154216   3 is eating 308
+154216   5 is thinking
+154409   2 is thinking
+154409   1 is sleeping
+154409   5 has taken a fork
+154409   5 has taken a fork
+154409   5 is eating 308
+154416   2 has taken a fork
+154416   2 has taken a fork
+154416   2 is eating 309
+154416   3 is sleeping
+154416   4 is thinking
+154609   5 is sleeping
+154609   4 has taken a fork
+154609   4 has taken a fork
+154609   4 is eating 309
+154609   1 is thinking
+154616   2 is sleeping
+154616   1 has taken a fork
+154616   1 has taken a fork
+154616   1 is eating 309
+154616   3 is thinking
+154809   4 is sleeping
+154809   5 is thinking
+154809   3 has taken a fork
+154809   3 has taken a fork
+154809   3 is eating 309
+154816   2 is thinking
+154816   1 is sleeping
+154816   5 has taken a fork
+154816   5 has taken a fork
+154816   5 is eating 309
+155009   4 is thinking
+155009   3 is sleeping
+155009   2 has taken a fork
+155009   2 has taken a fork
+155009   2 is eating 310
+155016   1 is thinking
+155016   5 is sleeping
+155016   4 has taken a fork
+155016   4 has taken a fork
+155016   4 is eating 310
+155016   4 died
+155209   2 is sleeping
+155209   3 is thinking
+155216   5 is thinking
+155216   4 is sleeping
+155409   2 is thinking
+155416   4 is thinking
+
+./philo 4 410 200 200
+
+145804   4 is sleeping 1693368426944
+145804   1 is thinking 1693368426744
+145804   1 has taken a fork 1693368426744
+145804   1 has taken a fork 1693368426744
+145804   3 is thinking 1693368426744
+145804   3 has taken a fork 1693368426744
+145804   3 has taken a fork 1693368426744
+145804   1 is eating 1693368426744
+145804   3 is eating 1693368426744
+146004   4 is thinking 1693368426944
+146004   4 has taken a fork 1693368426944
+146004   4 has taken a fork 1693368426944
+146004   1 is sleeping 1693368427144
+146004   3 is sleeping 1693368427144
+146004   4 is eating 1693368426944
+146004   2 is thinking 1693368426944
+146004   2 has taken a fork 1693368426944
+146004   2 has taken a fork 1693368426944
+146004   2 is eating 1693368426944
+146204   1 is thinking 1693368427144
+146204   1 has taken a fork 1693368427144
+146204   1 has taken a fork 1693368427144
+146204   1 is eating 1693368427144
+146204   4 is sleeping 1693368427344
+146204   3 is thinking 1693368427144
+146204   3 has taken a fork 1693368427144
+146204   3 has taken a fork 1693368427144
+146204   3 is eating 1693368427144
+146204   2 is sleeping 1693368427344
+146404   4 is thinking 1693368427344
+146404   4 has taken a fork 1693368427344
+146404   4 has taken a fork 1693368427344
+146404   3 is sleeping 1693368427544
+146404   2 is thinking 1693368427344
+146404   2 has taken a fork 1693368427344
+146404   2 has taken a fork 1693368427344
+146404   1 is sleeping 1693368427544
+146404   2 is eating 1693368427344
+146404   4 is eating 1693368427344
+146604   3 is thinking 1693368427544
+146604   1 is thinking 1693368427544
+146604   2 is sleeping 1693368427744
+146604   4 is sleeping 1693368427744
+146604   3 has taken a fork 1693368427544
+146604   3 has taken a fork 1693368427544
+146604   3 is eating 1693368427544
+146605   1 has taken a fork 1693368427544
+146605   1 has taken a fork 1693368427544
+146605   1 is eating 1693368427544
+146606   1 died 1693368427945
+146804   4 is thinking 1693368427744
+146804   2 is thinking 1693368427744
+146804   3 is sleeping 1693368427944
+146805   1 is sleeping 1693368427945
+147004   3 is thinking 1693368427944
+147005   1 is thinking 1693368427945

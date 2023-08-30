@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:57:51 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 11:37:11 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 13:47:44 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,23 @@ void	*philo(void *phil)
 	philo = (t_philo *)phil;
 	if (philo->pid % 2 == 0)
 	{
-		
+		printf("even");
+		pthread_mutex_lock(philo->l_fork);
+		*philo->can_l = 0;
+		philo->have_l = 1;
+		print_msg(PICKING, philo);
+		pthread_mutex_lock(philo->r_fork);
+		*philo->can_r = 0;
+		philo->have_r = 1;
+		eating(philo);
 	}
+	usleep_ph(1);
 	while (philo->data->someone_dead == 0 && philo->data->finished == 0)
 	{
-		eating(philo);
-		if (philo->data->someone_dead == 0 && philo->data->finished == 0)
-			sleeping(philo);
-		if (philo->data->someone_dead == 0 && philo->data->finished == 0)
-			thinking(philo);
+		pickup_forks(philo);
+		if (philo->have_l == 1 && philo->have_r == 1)
+			eating(philo);
+		thinking(philo);
 	}
 	return (0);
 }
@@ -47,6 +55,7 @@ void	*monitoring(void *dat)
 		{
 			if (get_time() - data->philos[i].last_meal > data->t_die)
 			{
+				printf("that's why DEAD");
 				print_msg(DEAD, &data->philos[i]);
 				data->someone_dead = 1;
 			}
@@ -73,6 +82,7 @@ void	*waitering(void *dat)
 	{
 		if (data->im_full == data->philo_num)
 		{
+				printf("that's why FULL");
 			pthread_mutex_lock(&data->edit);
 			data->finished = 1;
 			pthread_mutex_unlock(&data->edit);
@@ -110,7 +120,7 @@ int	create_thread(t_data *data)
 		if (pthread_create(&data->thread[i], NULL, &philo, &data->philos[i]))
 			return (error_philo("fail create thread"));
 		i++;
-		usleep_ph(1);
+		//usleep_ph(1);
 	}
 	if (data->eat_goal != -1)
 	{
