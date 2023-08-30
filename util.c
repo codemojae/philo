@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 01:13:20 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 17:40:05 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 21:10:51 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	print_msg(int state, t_philo *philo)
 
 	pthread_mutex_lock(&philo->data->print);
 	time = get_time() - philo->data->t_start;
-	if (philo->data->someone_dead == 0 && philo->data->finished == 0)
+	if (!check_fin(philo->data))
+	//if (philo->data->someone_dead == 0 && philo->data->finished == 0)
 	{
 		if (state == EATING)
 			printf("%lld %d %sis eating%s\n", time, philo->pid, GREEN, RESET);

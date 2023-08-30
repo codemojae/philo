@@ -42,10 +42,10 @@ typedef struct s_philo
 	uint64_t		ttd;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
-	int				*can_r;
-	int				*can_l;
-	int				have_r;
-	int				have_l;
+	// int				*can_r;
+	// int				*can_l;
+	// int				have_r;
+	// int				have_l;
 	pthread_mutex_t	edit;
 }	t_philo;
 
@@ -65,7 +65,7 @@ typedef struct s_data
 	uint64_t		t_start;
 
 	pthread_mutex_t	*forks;
-	int				*can;
+	//int				*can;
 	pthread_mutex_t	edit;
 	pthread_mutex_t	print;
 }	t_data;
@@ -85,17 +85,22 @@ int			init_can(t_data *data);
 int			initialize(t_data *data, int argc, char **argv);
 
 // create_thread.c
+int			check_fin(t_data *data);
 void		*philo(void *data);
-void		*monitoring(void *dat);
-void		*waitering(void *data);
 int			join_thread(t_data *data);
 int			create_thread(t_data *data);
 
+// waiter.c
+int			check_full(t_data *data);
+void		*waitering(void *data);
+
+// monitor.c
+void		check_philo_stat(t_philo *philo);
+void		*monitoring(void *dat);
+
 // action.c
-void		pickup_forks2(t_philo *philo);
 void		pickup_forks(t_philo *philo);
 void		drop_forks(t_philo *philo);
-void		thinking(t_philo *philo);
 void		eating(t_philo *philo);
 
 // util.c

@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:56:32 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 18:39:33 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 19:40:42 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	init_philo(t_data *data)
 		data->philos[i].data = data;
 		data->philos[i].eat_count = 0;
 		data->philos[i].check = 0;
-		data->philos[i].have_l = 0;
-		data->philos[i].have_r = 0;
+		// data->philos[i].have_l = 0;
+		// data->philos[i].have_r = 0;
 		pthread_mutex_init(&data->philos[i].edit, NULL);
 		i++;
 	}
@@ -83,28 +83,28 @@ int	init_fork(t_data *data)
 	return (0);
 }
 
-int	init_can(t_data *data)
-{
-	int	i;
+// int	init_can(t_data *data)
+// {
+// 	int	i;
 
-	data->can = malloc(sizeof(int) * data->philo_num);
-	if (!data->forks)
-		return (error_philo("can malloc"));
-	i = 0;
-	while (i < data->philo_num)
-	{
-		data->can[i] = 1;
-		i++;
-	}
-	i = 0;
-	while (i < data->philo_num)
-	{
-		data->philos[i].can_l = &data->can[i];
-		data->philos[i].can_r = &data->can[(i + 1) % data->philo_num];
-		i++;
-	}
-	return (0);
-}
+// 	data->can = malloc(sizeof(int) * data->philo_num);
+// 	if (!data->can)
+// 		return (error_philo("can malloc"));
+// 	i = 0;
+// 	while (i < data->philo_num)
+// 	{
+// 		data->can[i] = 1;
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < data->philo_num)
+// 	{
+// 		data->philos[i].can_l = &data->can[i];
+// 		data->philos[i].can_r = &data->can[(i + 1) % data->philo_num];
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 int	initialize(t_data *data, int argc, char **argv)
 {
@@ -114,8 +114,8 @@ int	initialize(t_data *data, int argc, char **argv)
 		return (-1);
 	if (init_fork(data) == -1)
 		return (-1);
-	if (init_can(data) == -1)
-		return (-1);
+	// if (init_can(data) == -1)
+	// 	return (-1);
 	data->t_start = get_time();
 	return (0);
 }
