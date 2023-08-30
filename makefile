@@ -6,12 +6,12 @@
 #    By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 02:33:53 by hojakim           #+#    #+#              #
-#    Updated: 2023/08/30 02:36:12 by hojakim          ###   ########.fr        #
+#    Updated: 2023/08/30 09:46:42 by hojakim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
 
 SRC_PATH	=	./
 SRC			=	main.c action.c check_input.c create_thread.c exit_philo.c initialize.c util.c

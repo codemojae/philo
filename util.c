@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 01:13:20 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 02:50:31 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 09:12:28 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ uint64_t	get_time(void)
 	struct timeval	current_time;
 	uint64_t		micro_seconds;
 
-	gettimeofday(&current_time, NULL);
+	if (gettimeofday(&current_time, NULL))
+		return (error_philo("fail gettimeofday"));
 	micro_seconds = (current_time.tv_sec * (uint64_t)1000)
 		+ (current_time.tv_usec / 1000);
 	return (micro_seconds);

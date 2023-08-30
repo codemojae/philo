@@ -24,11 +24,17 @@ int	one_philo(t_data *data)
 	return (0);
 }
 
+void	check_leak(void)
+{
+	system("leaks philo");
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
 	int		err_code;
 
+	atexit(check_leak);
 	if (argc < 5 || argc > 6)
 	{
 		printf("5 or 6 arguments.\n");
@@ -39,15 +45,16 @@ int	main(int argc, char **argv)
 		return (1);
 	if (initialize(&data, argc, argv) == -1) // 오류시 free 필요.
 		return (1);
-	if (data.philo_num == 1)
-		return (one_philo(&data));
-	printf("%d %d\n", data.someone_dead, data.finished);
+	//if (data.philo_num == 1)
+	//	return (one_philo(&data));
 	create_thread(&data);
+	usleep_ph(100);
 	exit_philo(&data);
 	return (0);
 }
 
-/* 최소 식사횟수를 충족하는지 확인하는건 tom
-
-data쪽에 finished 를 넣어서 이것만 확인하는걸로.
-eating 에서 철학자의 식사횟수를 담당하고, 식사 수가 목표치에 도달하면 finished++;*/
+// 죽었을때 왜 안멈추니.
+// 4 410 200 200 일때 죽으면 안되는데, 1만 먹고 3이 못먹어서 죽는다.
+// ㄴ 홀수번은 오른쪽부터, 짝수번은 왼쪽부터 잡는 방식으로 해결할 수 있을듯.
+// detach 와 Join 의 사용법에 있어서 무언가 잘못되었나?
+// 왜 식사횟수 1이면 안죽어?

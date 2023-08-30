@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:57:51 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 03:42:19 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 11:37:11 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,17 @@ void	*philo(void *phil)
 	t_philo	*philo;
 
 	philo = (t_philo *)phil;
+	if (philo->pid % 2 == 0)
+	{
+		
+	}
 	while (philo->data->someone_dead == 0 && philo->data->finished == 0)
 	{
 		eating(philo);
-		sleeping(philo);
-		thinking(philo);
+		if (philo->data->someone_dead == 0 && philo->data->finished == 0)
+			sleeping(philo);
+		if (philo->data->someone_dead == 0 && philo->data->finished == 0)
+			thinking(philo);
 	}
 	return (0);
 }
@@ -65,7 +71,7 @@ void	*waitering(void *dat)
 	data = (t_data *) dat;
 	while (data->someone_dead == 0 && data->finished == 0)
 	{
-		if (data->im_full == data->eat_goal)
+		if (data->im_full == data->philo_num)
 		{
 			pthread_mutex_lock(&data->edit);
 			data->finished = 1;
@@ -82,7 +88,8 @@ int	join_thread(t_data *data)
 	i = 0;
 	while (i < data->philo_num)
 	{
-		if (pthread_detach(data->thread[i]))
+		if (pthread_join(data->thread[i], NULL))
+		//if (pthread_detach(data->thread[i]))
 			return (error_philo("fail join thread"));
 		i++;
 	}
