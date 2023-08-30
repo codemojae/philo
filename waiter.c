@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 21:37:16 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 21:37:39 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 22:37:05 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*waitering(void *dat)
 		{
 			print_msg(FULL, &data->philos[0]);
 			pthread_mutex_lock(&data->edit);
-			data->finished = 1;
+			data->ending = 2;
 			pthread_mutex_unlock(&data->edit);
 		}
 	}

@@ -42,21 +42,17 @@ typedef struct s_philo
 	uint64_t		ttd;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
-	// int				*can_r;
-	// int				*can_l;
-	// int				have_r;
-	// int				have_l;
 	pthread_mutex_t	edit;
 }	t_philo;
 
+// dead확인하려면 필요한것 ttd, t_die(고정))
+// full을 확인하려면 필요한것 eat_count, check, im_full, eat_goal
+// eating에 필요한것 t_die(고정), ttd, eat_count, 
 typedef struct s_data
 {
 	pthread_t		*thread;
 	int				philo_num;
-	int				someone_dead;
 	int				eat_goal;
-	int				im_full;
-	int				finished;
 
 	t_philo			*philos;
 	uint64_t		t_eat;
@@ -64,8 +60,12 @@ typedef struct s_data
 	uint64_t		t_die;
 	uint64_t		t_start;
 
+	//int				someone_dead;
+	//int				finished;
+	int				ending;
+	int				im_full;
+
 	pthread_mutex_t	*forks;
-	//int				*can;
 	pthread_mutex_t	edit;
 	pthread_mutex_t	print;
 }	t_data;

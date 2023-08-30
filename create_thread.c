@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:57:51 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 21:39:35 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 22:30:21 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	check_fin(t_data *data)
 
 	i = 0;
 	pthread_mutex_lock(&data->edit);
-	if (data->someone_dead == 1 || data->finished == 1)
-		i = 1;
+	if (data->ending != 0)
+		i = data->ending;
 	pthread_mutex_unlock(&data->edit);
 	return (i);
 }
@@ -76,6 +76,7 @@ int	create_thread(t_data *data)
 		if (pthread_create(&data->thread[i], NULL, &philo, &data->philos[i]))
 			return (error_philo("fail create thread"));
 		i++;
+		usleep(2);
 	}
 	if (pthread_create(&monitor, NULL, &monitoring, data))
 		return (error_philo("fail create thread"));

@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 21:38:09 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 21:43:14 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/30 22:37:09 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_philo_stat(t_philo *philo)
 	{
 		print_msg(DEAD, philo);
 		pthread_mutex_lock(&philo->data->edit);
-		philo->data->someone_dead = 1;
+		philo->data->ending = 1;
 		pthread_mutex_unlock(&philo->data->edit);
 	}
 	pthread_mutex_lock(&philo->data->edit);
@@ -47,6 +47,7 @@ void	*monitoring(void *dat)
 			check_philo_stat(&data->philos[i]);
 			i++;
 		}
+		usleep(10);
 	}
 	return (0);
 }
