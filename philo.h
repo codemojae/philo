@@ -41,7 +41,9 @@ typedef struct s_philo
 	int				check;
 	uint64_t		ttd;
 	pthread_mutex_t	*r_fork;
+	int				get_r;
 	pthread_mutex_t	*l_fork;
+	int				get_l;
 	pthread_mutex_t	edit;
 }	t_philo;
 
@@ -60,61 +62,66 @@ typedef struct s_data
 	uint64_t		t_die;
 	uint64_t		t_start;
 
-	//int				someone_dead;
-	//int				finished;
 	int				ending;
 	int				im_full;
 
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	edit;
 	pthread_mutex_t	print;
+	pthread_mutex_t	start;
 }	t_data;
+
+// action.c
+void		pick_right_left(t_philo *philo);
+void		pick_left_right(t_philo *philo);
+void		pickup_forks(t_philo *philo);
+void		drop_forks(t_philo *philo);
+void		eating(t_philo *philo);
 
 // check_input.c
 int			is_digit(char c);
 int			is_sign(char c);
 int			is_valid_form(char *value);
 int			ft_atoi_check(const char *str);
-int			check_input(char **argv);
-
-// initialize.c
-int			init_data(t_data *data, int argc, char **argv);
-int			init_philo(t_data *data);
-int			init_fork(t_data *data);
-int			init_can(t_data *data);
-int			initialize(t_data *data, int argc, char **argv);
+int			check_input(int argc, char **argv);
 
 // create_thread.c
 int			check_fin(t_data *data);
-void		*philo(void *data);
 int			join_thread(t_data *data);
 int			create_thread(t_data *data);
-
-// waiter.c
-int			check_full(t_data *data);
-void		*waitering(void *data);
-
-// monitor.c
-void		check_philo_stat(t_philo *philo);
-void		*monitoring(void *dat);
-
-// action.c
-void		pickup_forks(t_philo *philo);
-void		drop_forks(t_philo *philo);
-void		eating(t_philo *philo);
-
-// util.c
-uint64_t	get_time(void);
-void		print_msg(int state, t_philo *philo);
-int			usleep_ph(useconds_t time);
-int			ft_atoi_ph(const char *str);
 
 // exit_philo.c
 void		free_thread(t_data *data);
 void		free_data(t_data *data);
 int			exit_philo(t_data *data);
 
+// initialize.c
+int			init_data(t_data *data, int argc, char **argv);
+int			init_philo(t_data *data);
+int			init_fork(t_data *data);
+int			initialize(t_data *data, int argc, char **argv);
+
 // main.c
 int			error_philo(char *str);
+
+// th_monitor.c
+void		check_philo_stat(t_philo *philo);
+void		*monitoring(void *dat);
+
+// th_philo.c
+void		wait_for_start(t_philo *philo);
+void		thinking(t_philo *philo);
+void		lonely_philo(t_philo *philo);
+void		*philo(void *phil);
+
+// th_waiter.c
+int			check_full(t_data *data);
+void		*waitering(void *dat);
+
+// util.c
+uint64_t	get_time(void);
+void		print_msg(int state, t_philo *philo);
+int			usleep_ph(useconds_t time);
+int			ft_atoi_ph(const char *str);
 
 #endif

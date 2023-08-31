@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:55:08 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 18:01:48 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/31 17:06:32 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,13 @@ int	ft_atoi_check(const char *str)
 			return (-1);
 		str++;
 	}
-	if (result * pm < 0)
+	if (result * pm <= 0)
 		return (-1);
 	return (0);
 }
 
-
 // 입력값 확인, 숫자인지, 양수인지 등.
-int	check_input(char **argv)
+int	check_input(int argc, char **argv)
 {
 	int	i;
 
@@ -82,5 +81,7 @@ int	check_input(char **argv)
 			return (error_philo("Only Positive number in INT range"));
 		i++;
 	}
+	if (argc == 6 && ft_atoi_ph(argv[5]) == 0)
+		return (error_philo("Philosophers need meal at least 1"));
 	return (0);
 }

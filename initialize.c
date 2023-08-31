@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:56:32 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 22:44:06 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/31 16:27:23 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ int	init_data(t_data *data, int argc, char **argv)
 		return (error_philo("data malloc"));
 	data->im_full = 0;
 	data->ending = 0;
-	// data->someone_dead = 0;
-	// data->finished = 0;
 	pthread_mutex_init(&data->edit, NULL);
 	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->start, NULL);
 	return (0);
 }
 
@@ -53,6 +52,8 @@ int	init_philo(t_data *data)
 		data->philos[i].data = data;
 		data->philos[i].eat_count = 0;
 		data->philos[i].check = 0;
+		data->philos[i].get_r = 0;
+		data->philos[i].get_l = 0;
 		pthread_mutex_init(&data->philos[i].edit, NULL);
 		i++;
 	}
@@ -90,8 +91,6 @@ int	initialize(t_data *data, int argc, char **argv)
 		return (-1);
 	if (init_fork(data) == -1)
 		return (-1);
-	// if (init_can(data) == -1)
-	// 	return (-1);
 	data->t_start = get_time();
 	return (0);
 }

@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 		printf("5 or 6 arguments.\n");
 		return (1);
 	}
-	err_code = check_input(argv);
+	err_code = check_input(argc, argv);
 	if (err_code == -1)
 		return (1);
 	if (initialize(&data, argc, argv) == -1)
@@ -39,12 +39,12 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-// 수많은 데이터레이스를 확인했다. 그 기록
-// ㄴ eating에 뮤텍스 삽입
+// 혼자일때 죽으면 프로그램이 끝나지 않음.
+// ㄴ 같은 fork를 가지고 있어서 문제가 되는데....
+/*
+ 1. 1인 경우에 새로운 함수를 만들어서 단순출력을 하게 한다?
+ 2. */
 
-// 범위를 초과한 입력대처. "   205010520" 같은 형태의 입력 대처.
-
-// 짝수의 경우 딜레이를 주지 않으면 모두가 잠드는 이상현상이 발생한다.
 // detach 와 Join 의 사용법에 있어서 무언가 잘못되었나?
 
 // --- 완료 --- 
@@ -64,3 +64,7 @@ int	main(int argc, char **argv)
 // 해제해야하는것, data -> malloc thread, forks, can, philos 
 // mutex forks, edit, print
 // pthread_cancel을 사용할 수가 없어서 그냥 반환하기로.
+
+// 범위를 초과한 입력대처. "   205010520" 같은 형태의 입력 대처.
+
+// 짝수의 경우 딜레이를 주지 않으면 모두가 잠드는 이상현상이 발생한다.

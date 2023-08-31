@@ -6,13 +6,12 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 01:13:20 by hojakim           #+#    #+#             */
-/*   Updated: 2023/08/30 21:10:51 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/08/31 16:55:33 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-//복붙
 uint64_t	get_time(void)
 {
 	struct timeval	current_time;
@@ -32,7 +31,6 @@ void	print_msg(int state, t_philo *philo)
 	pthread_mutex_lock(&philo->data->print);
 	time = get_time() - philo->data->t_start;
 	if (!check_fin(philo->data))
-	//if (philo->data->someone_dead == 0 && philo->data->finished == 0)
 	{
 		if (state == EATING)
 			printf("%lld %d %sis eating%s\n", time, philo->pid, GREEN, RESET);
@@ -56,7 +54,7 @@ int	usleep_ph(useconds_t time)
 
 	start_sleep = get_time();
 	while ((get_time() - start_sleep) < time)
-		usleep(10); // 이건 조절
+		usleep(10);
 	return (0);
 }
 
