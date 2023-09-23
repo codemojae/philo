@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 08:49:46 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/23 08:52:58 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/23 12:06:57 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ int	main(int argc, char **argv)
 	err_code = check_input(argc, argv);
 	if (err_code == -1)
 		return (1);
-	if (initialize(&data, argc, argv) == -1) // 아직 안함
-		return (exit_philo(&data)); // 아직안함
-	
+	if (initialize(&data, argc, argv) == 1)
+		return (exit_philo(&data));
+	if (create_process(&data) == 1)
+		return (exit_philo(&data));
 	return (0);
 }

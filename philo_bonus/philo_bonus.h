@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 18:09:43 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/23 11:09:57 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/23 12:06:18 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_philo
 	int				check;
 	uint64_t		ttd;
 	pthread_t		thread;
-	pthread_mutex_t	edit;
 }	t_philo;
 
 // dead확인하려면 필요한것 ttd, t_die(고정))
@@ -52,8 +51,8 @@ typedef struct s_data
 	int				im_full;
 
 	sem_t	*forks;
-	pthread_mutex_t	edit;
 	sem_t	*print;
+	pthread_mutex_t	edit;
 	pthread_mutex_t	start;
 }	t_data;
 
