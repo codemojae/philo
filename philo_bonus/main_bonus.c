@@ -32,7 +32,8 @@ int	main(int argc, char **argv)
 	err_code = check_input(argc, argv);
 	if (err_code == -1)
 		return (1);
-	if (initialize(&data, argc, argv) == -1)
-		return (exit_philo(&data));
+	if (initialize(&data, argc, argv) == -1) // 아직 안함
+		return (exit_philo(&data)); // 아직안함
+	
 	return (0);
 }

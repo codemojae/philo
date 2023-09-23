@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 18:09:43 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/23 08:48:33 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/23 11:09:57 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,11 @@ typedef struct s_philo
 {
 	struct s_data	*data;
 	int				pid;
+	int				id;
 	int				eat_count;
 	int				check;
 	uint64_t		ttd;
-	pthread_mutex_t	*r_fork;
-	int				get_r;
-	pthread_mutex_t	*l_fork;
-	int				get_l;
+	pthread_t		thread;
 	pthread_mutex_t	edit;
 }	t_philo;
 
@@ -41,7 +39,6 @@ typedef struct s_philo
 // eating에 필요한것 t_die(고정), ttd, eat_count, 
 typedef struct s_data
 {
-	pthread_t		*thread;
 	int				philo_num;
 	int				eat_goal;
 
@@ -54,9 +51,9 @@ typedef struct s_data
 	int				ending;
 	int				im_full;
 
-	pthread_mutex_t	*forks;
+	sem_t	*forks;
 	pthread_mutex_t	edit;
-	pthread_mutex_t	print;
+	sem_t	*print;
 	pthread_mutex_t	start;
 }	t_data;
 
