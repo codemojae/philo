@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize_bonus.c                                 :+:      :+:    :+:   */
+/*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/23 08:53:26 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/25 23:03:07 by hojakim          ###   ########.fr       */
+/*   Created: 2023/08/31 17:45:03 by hojakim           #+#    #+#             */
+/*   Updated: 2023/08/31 17:45:04 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
-
-// unlink 해야하나?
-int	init_sem(t_data *data)
-{
-	data->forks = sem_open("forks", O_CREAT, 0644, data->philo_num);
-	if (!(data->forks))
-		return (1);
-	data->print = sem_open("print", O_CREAT, 0644, 1);
-	if (!(data->print))
-		return (1);
-	return (0);
-}
+#include "philo.h"
 
 int	init_data(t_data *data, int argc, char **argv)
 {
@@ -34,34 +22,58 @@ int	init_data(t_data *data, int argc, char **argv)
 		data->eat_goal = ft_atoi_ph(argv[5]);
 	else
 		data->eat_goal = -1;
+	data->thread = malloc(sizeof(pthread_t) * data->philo_num);
+	if (!data->thread)
+		return (error_philo("data malloc"));
 	data->im_full = 0;
 	data->ending = 0;
-	data->forks = NULL;
-	data->print = NULL;
-	if (init_sem(data))
-		return (1);
 	pthread_mutex_init(&data->edit, NULL);
+	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->start, NULL);
 	return (0);
 }
 
-// pid는 fork()할때 사용, thread는 fork() 후 자식프로세스 모니터 만들때 사용, check은 보류.
 int	init_philo(t_data *data)
 {
 	int	i;
 
 	data->philos = malloc(sizeof(t_philo) * data->philo_num);
 	if (!data->philos)
-		return (1);
+		return (error_philo("philo malloc"));
 	i = 0;
 	while (i < data->philo_num)
 	{
-		data->philos[i].id = i + 1;
+		data->philos[i].pid = i + 1;
 		data->philos[i].ttd = get_time() + data->t_die;
 		data->philos[i].data = data;
 		data->philos[i].eat_count = 0;
-		data->philos[i].eating = 0;
-		data->philos[i].full = 0;
+		data->philos[i].check = 0;
+		data->philos[i].get_r = 0;
+		data->philos[i].get_l = 0;
+		pthread_mutex_init(&data->philos[i].edit, NULL);
+		i++;
+	}
+	return (0);
+}
+
+int	init_fork(t_data *data)
+{
+	int	i;
+
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_num);
+	if (!data->forks)
+		return (error_philo("fork malloc"));
+	i = 0;
+	while (i < data->philo_num)
+	{
+		pthread_mutex_init(&data->forks[i], NULL);
+		i++;
+	}
+	i = 0;
+	while (i < data->philo_num)
+	{
+		data->philos[i].l_fork = &data->forks[i];
+		data->philos[i].r_fork = &data->forks[(i + 1) % data->philo_num];
 		i++;
 	}
 	return (0);
@@ -69,10 +81,12 @@ int	init_philo(t_data *data)
 
 int	initialize(t_data *data, int argc, char **argv)
 {
-	if (init_data(data, argc, argv) == 1)
-		return (1);
-	if (init_philo(data) == 1)
-		return (1);
+	if (init_data(data, argc, argv) == -1)
+		return (-1);
+	if (init_philo(data) == -1)
+		return (-1);
+	if (init_fork(data) == -1)
+		return (-1);
 	data->t_start = get_time();
 	return (0);
 }

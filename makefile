@@ -5,15 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/08/30 02:33:53 by hojakim           #+#    #+#              #
-#    Updated: 2023/08/31 16:32:03 by hojakim          ###   ########.fr        #
+#    Created: 2023/08/31 17:45:49 by hojakim           #+#    #+#              #
+#    Updated: 2023/09/26 01:00:51 by hojakim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
 
-SRC_PATH	=	./
+SRC_PATH	=	philo/
 SRC			=	main.c action.c check_input.c create_thread.c exit_philo.c initialize.c util.c th_philo.c th_waiter.c th_monitor.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJS		=	$(SRCS:.c=.o)

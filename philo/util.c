@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util_bonus.c                                       :+:      :+:    :+:   */
+/*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:46:02 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/25 20:08:23 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/22 22:06:53 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
 
 uint64_t	get_time(void)
 {
@@ -28,24 +28,24 @@ void	print_msg(int state, t_philo *philo)
 {
 	uint64_t	time;
 
-	sem_wait("print");
+	pthread_mutex_lock(&philo->data->print);
 	time = get_time() - philo->data->t_start;
 	if (!check_fin(philo->data))
 	{
 		if (state == EATING)
-			printf("%lld %d %sis eating%s\n", time, philo->id, GREEN, RESET);
+			printf("%lld %d %sis eating%s\n", time, philo->pid, GREEN, RESET);
 		else if (state == SLEEPING)
-			printf("%lld %d %sis sleeping%s\n", time, philo->id, YELLOW, RESET);
+			printf("%lld %d %sis sleeping%s\n", time, philo->pid, YELLOW, RESET);
 		else if (state == THINKING)
-			printf("%lld %d is thinking\n", time, philo->id);
+			printf("%lld %d is thinking\n", time, philo->pid);
 		else if (state == DEAD)
-			printf("%lld %d %sdied%s\n", time, philo->id, RED, RESET);
+			printf("%lld %d %sdied%s\n", time, philo->pid, RED, RESET);
 		else if (state == PICKING)
-			printf("%lld %d has taken a fork\n", time, philo->id);
+			printf("%lld %d has taken a fork\n", time, philo->pid);
 		else if (state == FULL)
 			printf("%lld ALL the philosophers finished meal\n", time);
 	}
-	sem_post("print");
+	pthread_mutex_unlock(&philo->data->print);
 }
 
 int	sleep_ph(useconds_t time)

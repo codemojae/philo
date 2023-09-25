@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 18:09:43 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/23 12:06:18 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/25 23:26:26 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 # include <sys/stat.h>
 # include <semaphore.h>
 
+# define EATING 0
+# define SLEEPING 1
+# define THINKING 2
+# define DEAD 3
+# define PICKING 4
+# define FULL 5
+
 struct	s_data;
 
 typedef struct s_philo
@@ -28,7 +35,8 @@ typedef struct s_philo
 	int				pid;
 	int				id;
 	int				eat_count;
-	int				check;
+	int				eating;
+	int				full;
 	uint64_t		ttd;
 	pthread_t		thread;
 }	t_philo;
@@ -55,5 +63,27 @@ typedef struct s_data
 	pthread_mutex_t	edit;
 	pthread_mutex_t	start;
 }	t_data;
+
+//action_bonus.c
+void		pickup_forks(t_philo *philo);
+void		drop_forks(t_philo *philo);
+void		eating(t_philo *philo);
+void		thinking(t_philo *philo);
+
+//initialize_bonus.c
+int			init_sem(t_data *data);
+int			init_data(t_data *data, int argc, char **argv);
+int			init_philo(t_data *data);
+int			initialize(t_data *data, int argc, char **argv);
+
+//monitor_bonus.c
+void		check_philo_stat(t_philo *philo);
+void		*monitoring(void *dat);
+
+// util_bonus.c
+uint64_t	get_time(void);
+void		print_msg(int state, t_philo *philo);
+int			sleep_ph(useconds_t time);
+int			ft_atoi_ph(const char *str);
 
 #endif
