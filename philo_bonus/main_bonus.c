@@ -6,18 +6,24 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 08:49:46 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/25 18:37:43 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/26 14:33:15 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <semaphore.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <semaphore.h>
+// #include <unistd.h>
+// #include <sys/types.h>
+// #include <sys/wait.h>
+
+int	error_philo(char *str)
+{
+	printf("%s\n", str);
+	return (-1);
+}
 
 int	main(int argc, char **argv)
 {
@@ -34,8 +40,8 @@ int	main(int argc, char **argv)
 		return (1);
 	if (initialize(&data, argc, argv) == 1)
 		return (exit_philo(&data));
-	// 아래서 프로세스 만들고, philo안의 thread까지 만들어야함.
 	if (create_process(&data) == 1)
 		return (exit_philo(&data));
+	exit_philo(&data);
 	return (0);
 }

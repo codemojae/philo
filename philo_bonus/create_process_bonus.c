@@ -6,42 +6,32 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 12:07:13 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/26 00:58:15 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/26 15:12:18 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	wait_for_start(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->start);
-	//pthread_mutex_lock(&philo->edit);
-	philo->ttd = philo->data->t_start + philo->data->t_die;
-	//pthread_mutex_unlock(&philo->edit);
-	pthread_mutex_unlock(&philo->data->start);
-}
-
 void	lonely_philo(t_philo *philo)
 {
-	sem_wait("forks");
+	sem_wait(philo->data->forks);
 	print_msg(PICKING, philo);
-	while (!check_fin(philo->data))
+	while (philo->data->ending != 1)
 	{
 		usleep(333);
 	}
-	sem_post("forks");
+	sem_post(philo->data->forks);
 }
 
 //monitoring에서 죽었는지 체크
 int	philo_action(t_philo *philo)
 {
-	if (pthread_create(philo->thread, NULL, &monitoring, philo))
+	if (pthread_create(&philo->thread, NULL, &monitoring, philo))
 		return (1);
-	wait_for_start(philo);
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 == 1)
 		pickup_forks(philo);
 	else
-		usleep(philo->data->philo_num * 40);
+		sleep_ph(philo->data->t_eat);
 	while (philo->data->philo_num != 1)
 	{
 		if (philo->eating)
@@ -55,43 +45,6 @@ int	philo_action(t_philo *philo)
 	return (0);
 }
 
-// 각각의 프로세스가 철학자
-// 각 프로세스의 스레드가 모니터 
-int	create_process(t_data *data)
-{
-	int	i;
-	int	status;
-
-	i = 0;
-	pthread_mutex_lock(&data->start);
-	while (i < data->philo_num)
-	{
-		data->philos[i].pid = fork();
-		// 자식프로세스에서 실행
-		if (data->philos[i].pid == 0)
-		{
-			// 오류처리?
-			philo_action(&data->philos[i]);
-			return (0);
-		}
-		i++;
-	}
-	data->t_start = get_time();
-	pthread_mutex_unlock(&data->start);
-	i = 0;
-	while (i < data->philo_num)
-	{
-		waitpid(-1, &status, 0);
-		if ((status >> 8) == 1) // 죽음
-		{
-			kill_all_proc(data);
-			return (0);
-		}
-		i++;
-	}
-	return (0);
-}
-
 void	kill_all_proc(t_data *data)
 {
 	int	i;
@@ -102,4 +55,38 @@ void	kill_all_proc(t_data *data)
 		kill(data->philos[i].pid, SIGKILL);
 		i++;
 	}
+}
+
+// 각각의 프로세스가 철학자
+// 각 프로세스의 스레드가 모니터
+int	create_process(t_data *data)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < data->philo_num)
+	{
+		data->philos[i].pid = fork();
+		if (data->philos[i].pid == 0)
+		{
+			if (philo_action(&data->philos[i]) == 1)
+				return (1);
+			return (0);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < data->philo_num)
+	{
+		waitpid(-1, &status, 0);
+		if ((status >> 8) == 1)
+		{
+			kill_all_proc(data);
+			return (0);
+		}
+		i++;
+	}
+	print_msg(FULL, &data->philos[0]);
+	return (0);
 }

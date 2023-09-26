@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:46:02 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/25 20:08:23 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/26 15:15:06 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ void	print_msg(int state, t_philo *philo)
 {
 	uint64_t	time;
 
-	sem_wait("print");
+	sem_wait(philo->data->dead);
+	sem_wait(philo->data->print);
 	time = get_time() - philo->data->t_start;
-	if (!check_fin(philo->data))
+	if (philo->data->ending != 1)
 	{
 		if (state == EATING)
 			printf("%lld %d %sis eating%s\n", time, philo->id, GREEN, RESET);
@@ -43,9 +44,10 @@ void	print_msg(int state, t_philo *philo)
 		else if (state == PICKING)
 			printf("%lld %d has taken a fork\n", time, philo->id);
 		else if (state == FULL)
-			printf("%lld ALL the philosophers finished meal\n", time);
+			printf("**** ALL the philosophers had a meal enough ****\n");
 	}
-	sem_post("print");
+	sem_post(philo->data->print);
+	sem_post(philo->data->dead);
 }
 
 int	sleep_ph(useconds_t time)

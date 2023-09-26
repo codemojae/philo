@@ -20,10 +20,11 @@ int	error_philo(char *str)
 
 int	main(int argc, char **argv)
 {
-	// 나 죽음판단부분 수정할거니까 이거 확인해야된다? 월 20:16
 	t_data	data;
 	int		err_code;
 
+	// 뒤지는순가 풀어서 문제가 발생하나? ./philo 5 400 200 190 3
+	// 이건 왜 안걸림 ./philo 5 500 200 150
 	if (argc < 5 || argc > 6)
 	{
 		printf("5 or 6 arguments.\n");

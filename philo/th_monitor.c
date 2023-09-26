@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:45:30 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/25 20:38:13 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/26 11:48:12 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	check_philo_stat(t_philo *philo)
 	if (get_time() > philo->ttd)
 	{
 		print_msg(DEAD, philo);
-		undertaker(philo);
+		//undertaker(philo);
 		pthread_mutex_lock(&philo->data->edit);
 		philo->data->ending = 1;
 		pthread_mutex_unlock(&philo->data->edit);

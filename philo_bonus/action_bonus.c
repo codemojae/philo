@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 23:22:04 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/25 23:22:25 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/26 13:05:51 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 void	pickup_forks(t_philo *philo)
 {
-	sem_wait("forks");
+	sem_wait(philo->data->forks);
 	print_msg(PICKING, philo);
-	sem_wait("forks");
+	sem_wait(philo->data->forks);
 	print_msg(PICKING, philo);
 	philo->eating = 1;
 }
 
 void	drop_forks(t_philo *philo)
 {
-	sem_post("forks");
-	sem_post("forks");
-	philo->eating = 0;
+	sem_post(philo->data->forks);
+	sem_post(philo->data->forks);
 }
 
 void	eating(t_philo *philo)
@@ -35,9 +34,15 @@ void	eating(t_philo *philo)
 	philo->ttd = get_time() + philo->data->t_die;
 	sleep_ph(philo->data->t_eat);
 	drop_forks(philo);
+	philo->eating = 0;
+	if (philo->eat_count < philo->data->eat_goal || philo->data->eat_goal == -1)
+		sleeping(philo);
+}
+
+void	sleeping(t_philo *philo)
+{
 	print_msg(SLEEPING, philo);
 	sleep_ph(philo->data->t_sleep);
-	usleep(333);
 }
 
 void	thinking(t_philo *philo)

@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:46:02 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/22 22:06:53 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/26 12:04:07 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	print_msg(int state, t_philo *philo)
 		else if (state == PICKING)
 			printf("%lld %d has taken a fork\n", time, philo->pid);
 		else if (state == FULL)
-			printf("%lld ALL the philosophers finished meal\n", time);
+			printf("**** ALL the philosophers had a meal enough ****\n");
 	}
 	pthread_mutex_unlock(&philo->data->print);
 }

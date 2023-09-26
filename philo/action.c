@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:44:45 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/22 22:23:38 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/26 12:15:39 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	pickup_forks(t_philo *philo)
 		philo->get_l = 1;
 		print_msg(PICKING, philo);
 	}
-	if (philo->get_r == 0)
+	else if (philo->get_r == 0)
 	{
 		pthread_mutex_lock(philo->r_fork);
 		philo->get_r = 1;

@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 23:25:10 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/26 00:48:57 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/26 15:16:25 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ void	*monitoring(void *dat)
 		if (get_time() > philo->ttd)
 		{
 			print_msg(DEAD, philo);
+			sem_wait(philo->data->print);
 			philo->data->ending = 1;
 			break ;
 		}
-		usleep(100);
+		usleep(333);
 	}
 	exit(1);
 }

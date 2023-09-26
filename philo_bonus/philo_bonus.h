@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 18:09:43 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/25 23:26:26 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/26 15:15:01 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <pthread.h>
-# include <fcntl.h>
-# include <sys/stat.h>
+# include <sys/time.h>
+# include <unistd.h>
 # include <semaphore.h>
+# include <signal.h>
+//# include <fcntl.h>
+//# include <sys/stat.h>
 
 # define EATING 0
 # define SLEEPING 1
@@ -26,6 +29,11 @@
 # define DEAD 3
 # define PICKING 4
 # define FULL 5
+
+# define RED "\033[1;31m"
+# define GREEN "\033[0;32m"
+# define YELLOW "\033[0;33m"
+# define RESET "\033[0m"
 
 struct	s_data;
 
@@ -58,17 +66,26 @@ typedef struct s_data
 	int				ending;
 	int				im_full;
 
-	sem_t	*forks;
-	sem_t	*print;
-	pthread_mutex_t	edit;
-	pthread_mutex_t	start;
+	sem_t			*forks;
+	sem_t			*print;
+	sem_t			*dead;
 }	t_data;
 
 //action_bonus.c
 void		pickup_forks(t_philo *philo);
 void		drop_forks(t_philo *philo);
 void		eating(t_philo *philo);
+void		sleeping(t_philo *philo);
 void		thinking(t_philo *philo);
+
+//check_input_bonus.c
+int			check_input(int argc, char **argv);
+
+//create_process_bonus.c
+int			create_process(t_data *data);
+
+//exit_philo_bonus.c
+int			exit_philo(t_data *data);
 
 //initialize_bonus.c
 int			init_sem(t_data *data);
@@ -76,8 +93,10 @@ int			init_data(t_data *data, int argc, char **argv);
 int			init_philo(t_data *data);
 int			initialize(t_data *data, int argc, char **argv);
 
+//main_bonus.c
+int			error_philo(char *str);
+
 //monitor_bonus.c
-void		check_philo_stat(t_philo *philo);
 void		*monitoring(void *dat);
 
 // util_bonus.c

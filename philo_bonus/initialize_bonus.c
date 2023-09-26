@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 08:53:26 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/25 23:03:07 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/26 15:14:57 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 // unlink 해야하나?
 int	init_sem(t_data *data)
 {
+	sem_unlink("forks");
+	sem_unlink("print");
+	sem_unlink("dead");
 	data->forks = sem_open("forks", O_CREAT, 0644, data->philo_num);
 	if (!(data->forks))
 		return (1);
 	data->print = sem_open("print", O_CREAT, 0644, 1);
 	if (!(data->print))
+		return (1);
+	data->dead = sem_open("dead", O_CREAT, 0644, 1);
+	if (!(data->dead))
 		return (1);
 	return (0);
 }
@@ -40,8 +46,6 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->print = NULL;
 	if (init_sem(data))
 		return (1);
-	pthread_mutex_init(&data->edit, NULL);
-	pthread_mutex_init(&data->start, NULL);
 	return (0);
 }
 
