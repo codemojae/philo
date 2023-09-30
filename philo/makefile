@@ -6,7 +6,7 @@
 #    By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/31 17:45:49 by hojakim           #+#    #+#              #
-#    Updated: 2023/09/30 02:09:39 by hojakim          ###   ########.fr        #
+#    Updated: 2023/09/30 09:54:54 by hojakim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,8 @@ SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJS		=	$(SRCS:.c=.o)
 MAND_NAME	=	philo
 
-ifdef BONUS
-	OBJ_FILE = $(BNOBJS)
-	NAME	= $(BN_NAME)
-else
-	OBJ_FILE = $(OBJS)
-	NAME	= $(MAND_NAME)
-endif
+OBJ_FILE = $(OBJS)
+NAME	= $(MAND_NAME)
 
 all: $(NAME)
 

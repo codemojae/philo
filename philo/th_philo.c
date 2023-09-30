@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:45:55 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/30 00:51:39 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/30 16:08:07 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,9 @@ void	*philo(void *phil)
 	philo = (t_philo *)phil;
 	wait_for_start(philo);
 	if (philo->pid % 2 == 0)
-	{
 		pickup_forks(philo);
-		pickup_forks(philo);
-	}
 	else
-		usleep(philo->data->philo_num * 40);
+		usleep(philo->data->philo_num * 50);
 	while (!check_fin(philo->data) && philo->data->philo_num != 1)
 	{
 		if (philo->get_r == 1 && philo->get_l == 1)
