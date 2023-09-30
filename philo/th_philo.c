@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:45:55 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/26 11:34:17 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/30 00:51:39 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ void	thinking(t_philo *philo)
 		if (check_fin(philo->data))
 			return ;
 		pickup_forks(philo);
-		usleep(100);
+		usleep(500);
 	}
 }
 
 void	lonely_philo(t_philo *philo)
 {
-	pthread_mutex_lock(philo->r_fork);
+	pthread_mutex_lock(philo->r_fork_m);
 	print_msg(PICKING, philo);
 	while (!check_fin(philo->data))
 	{
-		usleep(333);
+		usleep(500);
 	}
-	pthread_mutex_unlock(philo->r_fork);
+	pthread_mutex_unlock(philo->r_fork_m);
 }
 
 void	*philo(void *phil)
@@ -65,5 +65,6 @@ void	*philo(void *phil)
 	}
 	if (philo->data->philo_num == 1)
 		lonely_philo(philo);
+	drop_forks(philo);
 	return (0);
 }

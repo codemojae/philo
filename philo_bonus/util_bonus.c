@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:46:02 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/26 15:15:06 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/30 02:43:29 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	print_msg(int state, t_philo *philo)
 {
 	uint64_t	time;
 
-	sem_wait(philo->data->dead);
 	sem_wait(philo->data->print);
+	sem_wait(philo->data->dead);
 	time = get_time() - philo->data->t_start;
 	if (philo->data->ending != 1)
 	{
@@ -46,8 +46,8 @@ void	print_msg(int state, t_philo *philo)
 		else if (state == FULL)
 			printf("**** ALL the philosophers had a meal enough ****\n");
 	}
-	sem_post(philo->data->print);
 	sem_post(philo->data->dead);
+	sem_post(philo->data->print);
 }
 
 int	sleep_ph(useconds_t time)
@@ -55,8 +55,10 @@ int	sleep_ph(useconds_t time)
 	uint64_t	start_sleep;
 
 	start_sleep = get_time();
-	while ((get_time() - start_sleep) < time)
-		usleep(time / 10);
+	while (get_time() - start_sleep < time)
+	{
+		usleep(250);
+	}
 	return (0);
 }
 

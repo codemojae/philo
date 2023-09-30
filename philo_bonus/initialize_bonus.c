@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 08:53:26 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/26 15:14:57 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/30 09:45:16 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	init_philo(t_data *data)
 		data->philos[i].eat_count = 0;
 		data->philos[i].eating = 0;
 		data->philos[i].full = 0;
+		data->philos[i].ttd_mutex = 0;
 		i++;
 	}
 	return (0);

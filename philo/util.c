@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:46:02 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/26 12:04:07 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/30 09:31:52 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void	print_msg(int state, t_philo *philo)
 	if (!check_fin(philo->data))
 	{
 		if (state == EATING)
-			printf("%lld %d %sis eating%s\n", time, philo->pid, GREEN, RESET);
+			printf("%lld %d is %seating%s\n", time, philo->pid, GREEN, RESET);
 		else if (state == SLEEPING)
-			printf("%lld %d %sis sleeping%s\n", time, philo->pid, YELLOW, RESET);
+			printf("%lld %d is %ssleeping%s\n", time, philo->pid, YELLOW, RESET);
 		else if (state == THINKING)
 			printf("%lld %d is thinking\n", time, philo->pid);
 		else if (state == DEAD)
-			printf("%lld %d %sdied%s\n", time, philo->pid, RED, RESET);
+			printf("%lld %d %sis died%s\n", time, philo->pid, RED, RESET);
 		else if (state == PICKING)
 			printf("%lld %d has taken a fork\n", time, philo->pid);
 		else if (state == FULL)
@@ -53,8 +53,10 @@ int	sleep_ph(useconds_t time)
 	uint64_t	start_sleep;
 
 	start_sleep = get_time();
-	while ((get_time() - start_sleep) < time)
-		usleep(time / 10);
+	while (get_time() - start_sleep < time)
+	{
+		usleep(250);
+	}
 	return (0);
 }
 

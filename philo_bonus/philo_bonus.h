@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 18:09:43 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/26 15:15:01 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/30 09:45:21 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 # include <unistd.h>
 # include <semaphore.h>
 # include <signal.h>
-//# include <fcntl.h>
-//# include <sys/stat.h>
+# include <string.h>
 
 # define EATING 0
 # define SLEEPING 1
@@ -47,6 +46,7 @@ typedef struct s_philo
 	int				full;
 	uint64_t		ttd;
 	pthread_t		thread;
+	int				ttd_mutex;
 }	t_philo;
 
 // dead확인하려면 필요한것 ttd, t_die(고정))
@@ -98,6 +98,9 @@ int			error_philo(char *str);
 
 //monitor_bonus.c
 void		*monitoring(void *dat);
+
+//philo_action.c
+int			philo_action(t_philo *philo);
 
 // util_bonus.c
 uint64_t	get_time(void);

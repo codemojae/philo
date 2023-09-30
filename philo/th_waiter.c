@@ -6,7 +6,7 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:45:59 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/26 11:47:38 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/30 02:09:57 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	*waitering(void *dat)
 			data->ending = 2;
 			pthread_mutex_unlock(&data->edit);
 		}
+		usleep(500);
 	}
 	return (0);
 }

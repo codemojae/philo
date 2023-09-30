@@ -6,7 +6,7 @@
 #    By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/31 17:45:49 by hojakim           #+#    #+#              #
-#    Updated: 2023/09/26 12:49:50 by hojakim          ###   ########.fr        #
+#    Updated: 2023/09/30 02:42:00 by hojakim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 SRC_PATH	=	./
-SRC			=	main action check_input create_process exit_philo initialize monitor util
+SRC			=	main action check_input create_process exit_philo initialize monitor philo_action util
 SRCS		=	$(addsuffix _bonus.c, $(addprefix $(SRC_PATH), $(SRC)))
 OBJS		=	$(SRCS:.c=.o)
 MAND_NAME	=	philo_bonus

@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <pthread.h>
 # include <sys/time.h>
 # include <unistd.h>
@@ -40,16 +41,13 @@ typedef struct s_philo
 	int				eat_count;
 	int				check;
 	uint64_t		ttd;
-	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*r_fork_m;
 	int				get_r;
-	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*l_fork_m;
 	int				get_l;
 	pthread_mutex_t	edit;
 }	t_philo;
 
-// dead확인하려면 필요한것 ttd, t_die(고정))
-// full을 확인하려면 필요한것 eat_count, check, im_full, eat_goal
-// eating에 필요한것 t_die(고정), ttd, eat_count, 
 typedef struct s_data
 {
 	pthread_t		*thread;
@@ -65,7 +63,8 @@ typedef struct s_data
 	int				ending;
 	int				im_full;
 
-	pthread_mutex_t	*forks;
+	int				*forks;
+	pthread_mutex_t	*fork_m;
 	pthread_mutex_t	edit;
 	pthread_mutex_t	print;
 	pthread_mutex_t	start;
@@ -89,15 +88,19 @@ int			join_thread(t_data *data);
 int			create_thread(t_data *data);
 
 // exit_philo.c
-void		free_thread(t_data *data);
+void		free_mutex(t_data *data);
 void		free_data(t_data *data);
 int			exit_philo(t_data *data);
 
 // initialize.c
+int			initialize(t_data *data, int argc, char **argv);
+
+// initialize_util.c
 int			init_data(t_data *data, int argc, char **argv);
 int			init_philo(t_data *data);
-int			init_fork(t_data *data);
-int			initialize(t_data *data, int argc, char **argv);
+int			init_forks(t_data *data);
+int			init_mutex(t_data *data);
+int			init_malloc(t_data *data, int philo_num);
 
 // main.c
 int			error_philo(char *str);

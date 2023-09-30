@@ -6,17 +6,11 @@
 /*   By: hojakim <hojakim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:45:30 by hojakim           #+#    #+#             */
-/*   Updated: 2023/09/26 11:48:12 by hojakim          ###   ########.fr       */
+/*   Updated: 2023/09/30 02:09:50 by hojakim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	undertaker(t_philo *philo)
-{
-	pthread_mutex_unlock(philo->l_fork);
-	pthread_mutex_unlock(philo->r_fork);
-}
 
 void	check_philo_stat(t_philo *philo)
 {
@@ -24,18 +18,17 @@ void	check_philo_stat(t_philo *philo)
 	if (get_time() > philo->ttd)
 	{
 		print_msg(DEAD, philo);
-		//undertaker(philo);
 		pthread_mutex_lock(&philo->data->edit);
 		philo->data->ending = 1;
 		pthread_mutex_unlock(&philo->data->edit);
 	}
-	pthread_mutex_lock(&philo->data->edit);
 	if (philo->eat_count >= philo->data->eat_goal && philo->check == 0)
 	{
+		pthread_mutex_lock(&philo->data->edit);
 		philo->data->im_full++;
+		pthread_mutex_unlock(&philo->data->edit);
 		philo->check = 1;
 	}
-	pthread_mutex_unlock(&philo->data->edit);
 	pthread_mutex_unlock(&philo->edit);
 }
 
@@ -53,7 +46,7 @@ void	*monitoring(void *dat)
 			check_philo_stat(&data->philos[i]);
 			i++;
 		}
-		usleep(10);
+		usleep(500);
 	}
 	return (0);
 }
